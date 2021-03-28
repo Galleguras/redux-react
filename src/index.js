@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import ListItem from './components/ListItem';
 import { connect } from 'react-redux';
-import { complete, submit } from './reducers/todos';
+import { complete, saveTodo } from './reducers/todos';
 import Input from './components/Input';
 
 /* const ss = [
@@ -12,19 +12,17 @@ import Input from './components/Input';
 const App = ({ data, complete, submit }) => {
   const [value, setValue] = useState('');
   const handleChange = (val) => {
+    console.log(val);
     setValue(val);
   };
-const handleSubmit =() => {
-  submit(value)
-  setValue('')
-}
+  const handleSubmit = () => {
+    console.log('xx');
+    submit(value);
+    setValue('');
+  };
   return (
     <View style={styles.container}>
-      <Input
-        onSubmit={handleSubmit}
-        onChange={handleChange}
-        value={value}
-      ></Input>
+      <Input onSubmit={handleSubmit} onChange={handleChange} value={value} />
       <FlatList
         style={styles.list}
         data={data}
@@ -46,7 +44,7 @@ const mapsStateToProps = (state) => {
 };
 const mapsDispatchToProps = (dispatch) => ({
   complete: (id) => dispatch(complete(id)),
-  submit: (val) => dispatch(submit(val)),
+  submit: (val) => dispatch(saveTodo(val)),
 });
 export default connect(mapsStateToProps, mapsDispatchToProps)(App);
 
